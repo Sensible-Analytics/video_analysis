@@ -4,7 +4,7 @@ kuzu
 python-dotenv
 pandas
 requests
-slugify
+python-slugify
 ffmpeg-python
 numpy
 yt-dlp
