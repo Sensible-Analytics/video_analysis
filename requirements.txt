@@ -1,0 +1,10 @@
+cognee
+lancedb
+kuzu
+python-dotenv
+pandas
+requests
+slugify
+ffmpeg-python
+numpy
+yt-dlp

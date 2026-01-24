@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.env
+
+# Project specific
+downloads/
+audio/
+transcripts/
+slides/
+cognee_data/
+pipeline.log
+.pytest_cache/
+.hypothesis/
+
+# UI/Mobile build artifacts (Future)
+node_modules/
+build/
+dist/
+ios/
+android/
+.expo/
