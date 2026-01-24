@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -33,42 +33,19 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install dependencies
+      - name: Install Build Tools
         run: |
           pip install -r requirements.txt
           pip install pyinstaller
-      - name: Build MacOS App
+      - name: Package MacOS Executable
         run: |
-          pyinstaller --onefile --windowed --name "VideoAnalysis" process_pipeline.py
-      - name: Upload artifact
+          pyinstaller --onefile --windowed --name "MandukyaBrain" process_pipeline.py
+      - name: Archive MacOS App
+        run: |
+          cd dist && zip -r ../MandukyaBrain_MacOS.zip MandukyaBrain
+      - name: Upload Desktop Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: video-analysis-macos
-          path: dist/VideoAnalysis
-
-  build-android:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Install Buildozer dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
-          pip3 install --user --upgrade buildozer
-      - name: Build Android APK
-        run: |
-          # Buildozer needs a spec file. We'll create a minimal one.
-          # For a real run, this takes ~20 mins and requires Android SDK acceptance.
-          # In CI, we use buildozer android debug
-          buildozer android debug
-        continue-on-error: true # Building Android in CI for first time often needs tuning
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: video-analysis-android
-          path: bin/*.apk
+          name: mandukya-ai-desktop
+          path: MandukyaBrain_MacOS.zip
+          retention-days: 7
