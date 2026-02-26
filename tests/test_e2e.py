@@ -68,5 +68,5 @@ with patch("process_pipeline.call_local_llm") as mock_llm, \\
     print(f"STDERR: {result.stderr}")
     
     assert result.returncode == 0 or "Error" not in result.stderr
-    assert (workdir / "slides" / "test_video.html").exists()
-    assert "E2E Slide" in (workdir / "slides" / "test_video.html").read_text()
+    assert (workdir / "slides" / "test-video.html").exists()
+    assert "E2E Slide" in (workdir / "slides" / "test-video.html").read_text()
