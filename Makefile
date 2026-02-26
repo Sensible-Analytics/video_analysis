@@ -37,7 +37,13 @@ test:
 
 # 🧹 Clean temporary data
 clean:
-	@echo "Cleaning temporary audio and transcripts..."
+	@echo "Cleaning up..."
+	rm -rf __pycache__ .pytest_cache .hypothesis pipeline.log
+
+# 🖥️ Desktop Setup Wizard
+setup-app:
+	@echo "Launching Desktop Setup Wizard..."
+	python3 setup_wizard.py
 	rm -rf audio/*
 	rm -rf slides/frames/*
 	@echo "Done."
