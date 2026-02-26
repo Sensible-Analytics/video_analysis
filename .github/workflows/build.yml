@@ -73,6 +73,8 @@ jobs:
       - name: Build frontend
         run: npm run build
         working-directory: frontend
+        env:
+          CI: false
       - name: Archive Frontend App (Web/Mobile)
         run: |
           cd frontend/build && zip -r ../../MandukyaBrain_Web_Mobile.zip .
