@@ -53,7 +53,7 @@ jobs:
         run: |
           Compress-Archive -Path dist\MandukyaBrain_${{ runner.os }}.exe -DestinationPath MandukyaBrain_${{ runner.os }}.zip
       - name: Upload Desktop Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mandukya-ai-desktop-${{ runner.os }}
           path: MandukyaBrain_${{ runner.os }}.zip
@@ -79,7 +79,7 @@ jobs:
         run: |
           cd frontend/build && zip -r ../../MandukyaBrain_Web_Mobile.zip .
       - name: Upload Web Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: mandukya-ai-web-mobile
           path: MandukyaBrain_Web_Mobile.zip
