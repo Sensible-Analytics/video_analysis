@@ -1,0 +1,56 @@
+# C4 System Context Diagram — Mandukya AI
+
+> System Context (Level 1) — Shows the system in scope and its relationships with users and external systems.
+
+```mermaid
+C4Context
+    title System Context — Mandukya AI (Video Analysis Pipeline)
+
+    Person(user, "User / Student", "A learner who wants to study educational videos deeply")
+
+    System_Boundary(b0, "Mandukya AI System") {
+        System(pipeline, "Python Pipeline", "Downloads, transcribes, indexes, and searches video content")
+        System(frontend, "React Frontend (Split-Helix UI)", "3D interactive UI for browsing lessons, transcripts, and knowledge graphs")
+        SystemDb(kg, "Knowledge Graph", "Cognee-managed RDBMS + Vector + Graph databases (Kùzu, LanceDB)")
+        SystemDb(fs, "File System", "Transcripts, frames, slides, diagrams stored on disk")
+    }
+
+    System_Ext(youtube, "YouTube", "Source of educational video content")
+    System_Ext(ollama, "Ollama (Local LLM)", "Local LLM for reasoning, insights, and diagram generation")
+    System_Ext(whisper, "Whisper.cpp", "Local audio-to-text transcription engine")
+    System_Ext(ffmpeg, "FFmpeg", "Video frame extraction and audio processing")
+    System_Ext(revealjs, "Reveal.js", "Presentation framework for generated slides")
+
+    Rel(user, pipeline, "Runs commands via Make CLI", "CLI")
+    Rel(user, frontend, "Interacts with 3D UI", "Browser")
+    Rel(pipeline, youtube, "Downloads videos", "yt-dlp")
+    Rel(pipeline, whisper, "Sends audio for transcription", "CLI call")
+    Rel(pipeline, ffmpeg, "Extracts frames and audio", "CLI call")
+    Rel(pipeline, ollama, "Requests insights and diagrams", "HTTP API")
+    Rel(pipeline, kg, "Stores and queries knowledge", "Cognee API")
+    Rel(pipeline, fs, "Reads/writes artifacts", "File I/O")
+    Rel(frontend, kg, "Queries knowledge graph", "Database")
+    Rel(frontend, fs, "Reads transcripts and slides", "File I/O")
+    Rel(fs, revealjs, "Renders slides", "HTML/JS")
+
+    UpdateRelStyle(user, pipeline, $offsetY="-40")
+    UpdateRelStyle(user, frontend, $offsetY="40")
+    UpdateRelStyle(pipeline, youtube, $offsetX="-60")
+    UpdateRelStyle(pipeline, ollama, $offsetX="60")
+```
+
+## Legend
+
+| Element | Description |
+|---------|-------------|
+| **Person** | Human user interacting with the system |
+| **System** | Software systems within the Mandukya AI boundary |
+| **SystemDb** | Data stores (databases, file systems) |
+| **System_Ext** | External systems the pipeline depends on |
+| **Rel** | Relationship/interaction between elements |
+
+## Notes
+
+- All external systems (Ollama, Whisper.cpp, FFmpeg) run **locally** — no cloud dependencies.
+- The pipeline and frontend share data through the file system and knowledge graph — no REST API layer.
+- YouTube is the only external network dependency (for video downloads).
