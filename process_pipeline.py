@@ -442,7 +442,7 @@ def call_local_llm(prompt: str, model_name: Optional[str] = None) -> Optional[st
                 full_text += obj["response"]
 
         full_text = full_text.strip()
-        time.sleep(RATE_LIMIT_SECONDS)
+        time.sleep(Config.RATE_LIMIT_SECONDS)
         return full_text if full_text else None
 
     except Exception as e:
